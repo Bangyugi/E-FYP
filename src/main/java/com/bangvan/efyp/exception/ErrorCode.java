@@ -33,7 +33,11 @@ public enum ErrorCode {
     PHONE_NUMBER_EXISTED(1018, "Phone number already exists", HttpStatus.BAD_REQUEST),
     INVALID_PASSWORD(1019, "Invalid password", HttpStatus.BAD_REQUEST),
     PASSWORD_NOT_MATCH(1020, "Password not match", HttpStatus.BAD_REQUEST),
-    PASSWORD_SHOULD_NOT_BE_SAME_AS_OLD(1021, "Password should not be same as old password", HttpStatus.BAD_REQUEST);
+    PASSWORD_SHOULD_NOT_BE_SAME_AS_OLD(1021, "Password should not be same as old password", HttpStatus.BAD_REQUEST),
+
+    UNAUTHENTICATED(1022,"User is not authenticated" , HttpStatus.BAD_REQUEST),
+    ACCESS_DENIED(1023, "Access denied", HttpStatus.FORBIDDEN);
+
 
     ErrorCode(int code, String message, HttpStatus status) {
         this.code = code;
