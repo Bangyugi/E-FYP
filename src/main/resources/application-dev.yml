@@ -4,15 +4,26 @@ spring:
             on-profile: dev
     devtools:
         add-properties: true
+    datasource:
+        url: jdbc:postgresql://localhost:5432/efyp
+        username: postgres
+        password: 5zm7aa8o
     jpa:
-        database-platform: org.hibernate.dialect.H2Dialect
-        hibernate:
-            ddl-auto: update
-        show-sql: false
         properties:
             hibernate:
-                format_sql: true
-
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+        show-sql: true
+        hibernate:
+            ddl-auto: update
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        username: bangtranvan08@gmail.com
+        password: inztsmgbywgzmevn
+redis:
+  port: 6379
+  host: localhost
+  password: 5zm7aa8o
 
 
 environment:

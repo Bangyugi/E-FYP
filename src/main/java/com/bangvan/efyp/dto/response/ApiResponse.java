@@ -1,11 +1,8 @@
 package com.bangvan.efyp.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-
+@Builder
 public class ApiResponse {
     private int code;
     private String message;

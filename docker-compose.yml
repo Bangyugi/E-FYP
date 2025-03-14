@@ -1,20 +1,20 @@
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: e-fyp-mysql
-    cap_add:
-      - SYS_NICE
-    restart: unless-stopped
-    environment:
-      - MYSQL_DATABASE=efyp
-      - MYSQL_ROOT_PASSWORD=5zm7aa8o
-    ports:
-      - '3306:3306'
-    volumes:
-      - mysql_data:/var/lib/mysql
-      - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
-    networks:
-      - default
+#  mysql:
+#    image: mysql:8.0
+#    container_name: e-fyp-mysql
+#    cap_add:
+#      - SYS_NICE
+#    restart: unless-stopped
+#    environment:
+#      - MYSQL_DATABASE=efyp
+#      - MYSQL_ROOT_PASSWORD=5zm7aa8o
+#    ports:
+#      - '3306:3306'
+#    volumes:
+#      - mysql_data:/var/lib/mysql
+#      - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
+#    networks:
+#      - default
 
   postgres:
     image: postgres
@@ -28,35 +28,49 @@ services:
       - postgres:/data/postgres
       - ./initdb.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - '5439:5432'
+      - '5432:5432'
     networks:
       - default
 
-  neo4j:
-    image: neo4j:4.4.3-community
-    ports:
-      - 7475:7474
-      - 7689:7687
+#  neo4j:
+#    image: neo4j:4.4.3-community
+#    ports:
+#      - 7475:7474
+#      - 7689:7687
+#    restart: unless-stopped
+#    environment:
+#      NEO4J_AUTH: neo4j/5zm7aa8o
+#    volumes:
+#      - ./db/data:/data
+#      - ./db/conf:/conf
+#      - ./db/logs:/logs
+#      - ./db/plugins:/plugins
+#    networks:
+#      - default
+#  e-fyp:
+#    container_name: e-fyp
+#    build:
+#      context: ./
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8080:8080"
+#    networks:
+#      - default
+
+  redis:
+    image: redis:latest
+    container_name: e-fyp-redis
     restart: unless-stopped
-    environment:
-      NEO4J_AUTH: neo4j/5zm7aa8o
-    volumes:
-      - ./db/data:/data
-      - ./db/conf:/conf
-      - ./db/logs:/logs
-      - ./db/plugins:/plugins
-    networks:
-      - default
-  e-fyp:
-    container_name: e-fyp
-    build:
-      context: ./
-      dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "6379:6379"
+    volumes:
+      - /path/to/local/dаta:/root/redis
+      - /path/to/local/redis.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_PASSWORD=5zm7aa8o
+      - REDIS_PORT=6379
     networks:
       - default
-
 
 networks:
   default:
