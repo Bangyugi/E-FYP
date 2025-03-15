@@ -9,10 +9,11 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-
+@Component
 public class JwtAuthenticationEntrypoint implements AuthenticationEntryPoint {
 
     @Override
@@ -34,4 +35,5 @@ public class JwtAuthenticationEntrypoint implements AuthenticationEntryPoint {
         response.flushBuffer();
 
     }
+
 }

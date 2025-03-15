@@ -5,7 +5,7 @@ spring:
     devtools:
         add-properties: true
     datasource:
-        url: jdbc:postgresql://localhost:5432/efyp
+        url: jdbc:postgresql://localhost:5432/efyp?createDatabaseIfNotExist=true
         username: postgres
         password: 5zm7aa8o
     jpa:
@@ -20,10 +20,6 @@ spring:
         port: 587
         username: bangtranvan08@gmail.com
         password: inztsmgbywgzmevn
-redis:
-  port: 6379
-  host: localhost
-  password: 5zm7aa8o
 
 
 environment:
@@ -41,3 +37,12 @@ openapi:
         server: http://localhost:${server.port}
         title: E-FYP API
         version: 1.0.0
+app:
+  jwt:
+    secret: d23507c6beedda00c5c65a1f0edfafea5adbbcbaa3a6225213542cfb16a914f6
+    expiration-milliseconds: 3600000
+    refresh-expiration-milliseconds: 604800000
+  redis:
+    port: 6379
+    host: localhost
+    password: 5zm7aa8o
