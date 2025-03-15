@@ -43,9 +43,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             final String jwt = authHeader.substring(7);
             final String username = jwtService.extractUsername(jwt);
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (username!=null && authentication == null){
+            if (username != null && authentication == null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-                if (jwtService.isTokenValid(jwt, userDetails)){
+                if (jwtService.isTokenValid(jwt, userDetails)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
                             null,
@@ -56,8 +56,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
             filterChain.doFilter(request, response);
-        }
-        catch(Exception exception){
+        } catch (SecurityException e) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT token");
+        } catch (Exception exception) {
             handlerExceptionResolver.resolveException(request, response, null, exception);
         }
     }
