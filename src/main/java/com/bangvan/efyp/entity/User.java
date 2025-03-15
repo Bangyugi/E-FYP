@@ -45,7 +45,7 @@ public class User extends AbstractEntity implements UserDetails {
     String lastName;
 
     @Column(name = "avatar")
-    String avatar;
+    String avatar = "https://cdn-icons-png.flaticon.com/512/3607/3607444.png";
 
     @Column(name = "otp")
     String otp;
@@ -58,11 +58,12 @@ public class User extends AbstractEntity implements UserDetails {
     Gender gender;
 
     @Column(name = "enabled")
-    Boolean enabled;
+    Boolean enabled = true;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinColumn(name = "role_id", nullable = false)
     Role role;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -73,21 +74,21 @@ public class User extends AbstractEntity implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return UserDetails.super.isAccountNonExpired();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return UserDetails.super.isAccountNonLocked();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return UserDetails.super.isCredentialsNonExpired();
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return UserDetails.super.isEnabled();
     }
 }

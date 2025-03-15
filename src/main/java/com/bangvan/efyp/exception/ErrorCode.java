@@ -35,8 +35,10 @@ public enum ErrorCode {
     PASSWORD_NOT_MATCH(1020, "Password not match", HttpStatus.BAD_REQUEST),
     PASSWORD_SHOULD_NOT_BE_SAME_AS_OLD(1021, "Password should not be same as old password", HttpStatus.BAD_REQUEST),
 
-    UNAUTHENTICATED(1022,"User is not authenticated" , HttpStatus.BAD_REQUEST),
-    ACCESS_DENIED(1023, "Access denied", HttpStatus.FORBIDDEN);
+    UNAUTHENTICATED(403,"User unauthenticated" , HttpStatus.BAD_REQUEST),
+    ACCESS_DENIED(403, "Access denied", HttpStatus.FORBIDDEN),
+    ROLE_NOT_FOUND(403, "Role not found", HttpStatus.BAD_REQUEST),
+    INVALID_TOKEN(403, "Invalid JWT token", HttpStatus.FORBIDDEN);
 
 
     ErrorCode(int code, String message, HttpStatus status) {

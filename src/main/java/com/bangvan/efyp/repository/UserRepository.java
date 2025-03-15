@@ -1,13 +1,14 @@
 package com.bangvan.efyp.repository;
 
 import com.bangvan.efyp.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository {
+public interface UserRepository extends JpaRepository<User,Long> {
 
 
 
@@ -18,8 +19,6 @@ public interface UserRepository {
     boolean existsByEmail(String email);
 
     boolean existsByUsername(String username);
-
-    Optional<User> findByUserIdAndStatus(Long userId, boolean b);
 
 
 }

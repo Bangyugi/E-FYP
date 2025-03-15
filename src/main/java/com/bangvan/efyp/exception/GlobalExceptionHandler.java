@@ -2,9 +2,15 @@ package com.bangvan.efyp.exception;
 
 
 import com.bangvan.efyp.dto.response.ApiResponse;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.AccountStatusException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -31,51 +37,15 @@ public class GlobalExceptionHandler {
     // Global exception handler
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse> handleGlobalException(Exception exception) {
-        ApiResponse apiResponse;
-
-        // TODO: Send stack trace to an observability tool
-//        exception.printStackTrace();
-
-//        if (exception instanceof BadCredentialsException) {
-//            apiResponse = ApiResponse.error(401, "The username or password is incorrect");
-//            return new ResponseEntity<>(apiResponse, HttpStatus.UNAUTHORIZED);
-//        }
-//
-//        if (exception instanceof AccountStatusException) {
-//            apiResponse = ApiResponse.error(9999, "The account is locked");
-//            return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
-//        }
-//
-//        if (exception instanceof AccessDeniedException) {
-//            apiResponse = ApiResponse.error(9999, "You are not authorized to access this resource");
-//            return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
-//        }
-//
-//        if (exception instanceof SignatureException) {
-//            apiResponse = ApiResponse.error(9999, "The JWT signature is invalid");
-//            return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
-//        }
-//
-//        if (exception instanceof ExpiredJwtException) {
-//            apiResponse = ApiResponse.error(9999, "The JWT token has expired");
-//            return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
-//        }
-//
-//        if(exception instanceof MalformedJwtException){
-//            apiResponse = ApiResponse.error(9999, "The JWT token is malformed");
-//            return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
-//        }
-
-        // Default handler for unknown exceptions
-        apiResponse = ApiResponse.error(500, exception.getMessage());
+        ApiResponse apiResponse= ApiResponse.error(500, exception.getMessage());
         return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-//    @ExceptionHandler(AccessDeniedException.class)
-//    public ResponseEntity<ApiResponse> handleAccessDeniedException(AccessDeniedException exception, WebRequest webRequest) {
-//        ApiResponse apiResponse = ApiResponse.error(403, "Access is denied: " + exception.getMessage());
-//        return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
-//    }
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiResponse> handleAccessDeniedException(AccessDeniedException exception) {
+        ApiResponse apiResponse = ApiResponse.error(403, "Access is denied: " + exception.getMessage());
+        return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
+    }
 
 }
 
