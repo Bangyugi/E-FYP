@@ -11,6 +11,7 @@ import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -63,15 +64,19 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String generateToken(UserDetails userDetails) {
-        Map<String,Object> extraClaims = new HashMap<>();
-        extraClaims.put("role",userDetails.getAuthorities());
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("role", userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .toList());  // Đảm bảo format đúng danh sách role
         return generateToken(extraClaims, userDetails, jwtExpiration);
     }
 
     @Override
     public String generateRefreshToken(UserDetails userDetails) {
-        Map<String,Object> extraClaims = new HashMap<>();
-        extraClaims.put("role",userDetails.getAuthorities());
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("role", userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .toList());  // Đảm bảo format đúng danh sách role
         return generateToken(extraClaims, userDetails, refreshTokenExpiration);
     }
 

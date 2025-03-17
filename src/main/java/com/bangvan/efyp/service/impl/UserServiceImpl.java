@@ -3,7 +3,6 @@ package com.bangvan.efyp.service.impl;
 import com.bangvan.efyp.dto.request.user.UpdateProfileRequest;
 import com.bangvan.efyp.dto.request.user.UserCreationRequest;
 import com.bangvan.efyp.dto.response.PageCustomResponse;
-import com.bangvan.efyp.dto.response.user.RoleResponse;
 import com.bangvan.efyp.dto.response.user.UserResponse;
 import com.bangvan.efyp.entity.Role;
 import com.bangvan.efyp.entity.User;
@@ -21,6 +20,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -52,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
         Role role = roleRepository.findByName("ROLE_STUDENT").orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND));
 
-        user.setRole(role);
+        user.setRoles(Set.of(role));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         log.info("Saving user to database");
@@ -79,17 +80,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse loadUserByUsername(String username){
         User user = userRepository.findByUsername(username).orElseThrow(()-> new ResourceNotFoundException("user","userId",username));
-        UserResponse response = modelMapper.map(user,UserResponse.class);
-        response.setRole(modelMapper.map(user.getRole(), RoleResponse.class));
-        return response;
+        return modelMapper.map(user,UserResponse.class);
     }
 
     @Override
     public UserResponse findUserById(Long userId){
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("user", "userId", userId));
-        UserResponse response = modelMapper.map(user,UserResponse.class);
-        response.setRole(modelMapper.map(user.getRole(), RoleResponse.class));
-        return response;
+        return modelMapper.map(user,UserResponse.class);
 
     }
 
@@ -102,9 +99,7 @@ public class UserServiceImpl implements UserService {
                 .totalPages(page.getTotalPages())
                 .totalElements(page.getTotalElements())
                 .pageContent(page.getContent().stream().map(user->{
-                    UserResponse response = modelMapper.map(user,UserResponse.class);
-                    response.setRole(modelMapper.map(user.getRole(), RoleResponse.class));
-                    return response;
+                    return modelMapper.map(user,UserResponse.class);
                 }).toList())
                 .build();
         return pageCustom;

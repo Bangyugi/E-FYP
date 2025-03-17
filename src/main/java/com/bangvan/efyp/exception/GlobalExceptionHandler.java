@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ApiResponse> handleAccessDeniedException(AccessDeniedException exception) {
-        ApiResponse apiResponse = ApiResponse.error(403, "Access is denied: " + exception.getMessage());
+        ApiResponse apiResponse = ApiResponse.error(403, exception.getMessage());
         return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
     }
 
