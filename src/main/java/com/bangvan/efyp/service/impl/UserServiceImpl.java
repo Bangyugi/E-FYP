@@ -1,5 +1,6 @@
 package com.bangvan.efyp.service.impl;
 
+import com.bangvan.efyp.dto.request.user.ChangePasswordRequest;
 import com.bangvan.efyp.dto.request.user.UpdateProfileRequest;
 import com.bangvan.efyp.dto.request.user.UserCreationRequest;
 import com.bangvan.efyp.dto.response.PageCustomResponse;
@@ -21,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.Set;
 
 @Service
@@ -103,6 +105,17 @@ public class UserServiceImpl implements UserService {
                 }).toList())
                 .build();
         return pageCustom;
+    }
+
+    @Override
+    public UserResponse changePassword(Principal principal, ChangePasswordRequest request){
+        User user = userRepository.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("user", "userId", principal.getName()));
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+            throw new AppException(ErrorCode.INVALID_PASSWORD);
+        }
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
+        return modelMapper.map(user, UserResponse.class);
     }
 
 

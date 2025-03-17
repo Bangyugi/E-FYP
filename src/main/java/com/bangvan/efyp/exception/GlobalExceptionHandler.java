@@ -41,11 +41,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<ApiResponse> handleAccessDeniedException(AccessDeniedException exception) {
-        ApiResponse apiResponse = ApiResponse.error(403, exception.getMessage());
-        return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
-    }
+
 
 }
 
