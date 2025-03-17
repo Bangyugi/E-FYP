@@ -5,6 +5,8 @@ import com.bangvan.efyp.utils.Gender;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,5 +23,5 @@ public class UserResponse {
     String avatar;
     Gender gender;
     Boolean enabled;
-    RoleResponse role;
+    Set<Role> roles;
 }

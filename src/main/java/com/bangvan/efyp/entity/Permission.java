@@ -18,8 +18,14 @@ public class Permission extends AbstractEntity {
     @Column(name = "permission_id")
     Long permissionId;
 
-    @Column(name = "name", nullable = false, unique = true)
-    String name;
+    @Column(name = "method", nullable = false)
+    String method;
+
+    @Column(name = "path", nullable = false)
+    String path;
+
+    @Column(name = "category", nullable = false)
+    String category;
 
     @Column(name = "description")
     String description;
