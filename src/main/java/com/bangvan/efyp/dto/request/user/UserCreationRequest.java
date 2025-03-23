@@ -1,6 +1,7 @@
 package com.bangvan.efyp.dto.request.user;
 
 
+import com.bangvan.efyp.utils.Gender;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -17,5 +18,5 @@ public class UserCreationRequest {
     String phone;
     String firstName;
     String lastName;
-    String gender;
+    Gender gender;
 }

@@ -18,7 +18,6 @@ public interface UserService {
 
     String deleteUser(Long userId);
 
-    UserResponse loadUserByUsername(String username);
 
     UserResponse findUserById(Long userId);
 

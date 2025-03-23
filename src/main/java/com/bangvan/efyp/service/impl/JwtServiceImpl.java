@@ -1,7 +1,5 @@
 package com.bangvan.efyp.service.impl;
 
-import com.bangvan.efyp.exception.AppException;
-import com.bangvan.efyp.exception.ErrorCode;
 import com.bangvan.efyp.service.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;

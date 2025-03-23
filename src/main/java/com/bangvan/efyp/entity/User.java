@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serial;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -67,7 +68,7 @@ public class User extends AbstractEntity implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> roles;;
+    private Set<Role> roles;
 
 
     @Override
@@ -97,5 +98,15 @@ public class User extends AbstractEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
+    }
+
+    @Serial
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+        out.defaultWriteObject();
+    }
+
+    @Serial
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+        in.defaultReadObject();
     }
 }

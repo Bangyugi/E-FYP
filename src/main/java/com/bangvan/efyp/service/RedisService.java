@@ -31,5 +31,5 @@ public interface RedisService {
 
     void setTTL(String key, Long timeToLive);
 
-    void flushAll();
+
 }

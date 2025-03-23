@@ -2,7 +2,6 @@ package com.bangvan.efyp.service.impl;
 
 import com.bangvan.efyp.entity.User;
 import com.bangvan.efyp.repository.UserRepository;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

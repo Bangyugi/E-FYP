@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         log.info("Saving user to database");
-        userRepository.save(user);
+        user= userRepository.save(user);
         return modelMapper.map(user, UserResponse.class);
     }
 
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
     public UserResponse updateUser(Long userId, UpdateProfileRequest request){
         User user = userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("user","userId",userId));
         modelMapper.map(request,user);
-        userRepository.save(user);
+        user=userRepository.save(user);
         return modelMapper.map(user, UserResponse.class);
     }
 
@@ -79,11 +79,6 @@ public class UserServiceImpl implements UserService {
         return "user with "+ userId +" was deleted successfully";
     }
 
-    @Override
-    public UserResponse loadUserByUsername(String username){
-        User user = userRepository.findByUsername(username).orElseThrow(()-> new ResourceNotFoundException("user","userId",username));
-        return modelMapper.map(user,UserResponse.class);
-    }
 
     @Override
     public UserResponse findUserById(Long userId){
@@ -95,16 +90,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public PageCustomResponse<UserResponse> findAllUsers(Pageable pageable){
         Page<User> page = userRepository.findAll(pageable);
-        PageCustomResponse<UserResponse> pageCustom = PageCustomResponse.<UserResponse>builder()
+        return PageCustomResponse.<UserResponse>builder()
                 .pageNo(page.getNumber()+1)
                 .pageSize(page.getSize())
                 .totalPages(page.getTotalPages())
                 .totalElements(page.getTotalElements())
-                .pageContent(page.getContent().stream().map(user->{
-                    return modelMapper.map(user,UserResponse.class);
-                }).toList())
+                .pageContent(page.getContent().stream().map(user->
+                    modelMapper.map(user,UserResponse.class)
+                ).toList())
                 .build();
-        return pageCustom;
     }
 
     @Override
@@ -113,8 +107,9 @@ public class UserServiceImpl implements UserService {
         if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
             throw new AppException(ErrorCode.INVALID_PASSWORD);
         }
+
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
-        userRepository.save(user);
+        user=userRepository.save(user);
         return modelMapper.map(user, UserResponse.class);
     }
 

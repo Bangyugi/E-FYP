@@ -1,9 +1,6 @@
 package com.bangvan.efyp.exception;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.http.HttpStatus;
+
 
 
 public class AppException extends RuntimeException {
@@ -14,8 +11,6 @@ public class AppException extends RuntimeException {
         this.errorCode = errorCode;
     }
 
-    public AppException(HttpStatus httpStatus, String invalidJwtToken) {
-    }
 
     public ErrorCode getErrorCode() {
         return errorCode;
