@@ -6,7 +6,6 @@ import com.bangvan.efyp.dto.response.user.UserResponse;
 import com.bangvan.efyp.entity.User;
 import com.bangvan.efyp.exception.AppException;
 import com.bangvan.efyp.exception.ErrorCode;
-import com.bangvan.efyp.exception.ResourceNotFoundException;
 import com.bangvan.efyp.repository.UserRepository;
 import com.bangvan.efyp.service.AuthenticationService;
 import com.bangvan.efyp.service.JwtService;

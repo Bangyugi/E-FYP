@@ -1,9 +1,11 @@
 package com.bangvan.efyp.controller;
 
 
+import com.bangvan.efyp.dto.request.user.ChangePasswordRequest;
 import com.bangvan.efyp.dto.request.user.UpdateProfileRequest;
 import com.bangvan.efyp.dto.request.user.UserCreationRequest;
 import com.bangvan.efyp.dto.response.ApiResponse;
+import com.bangvan.efyp.dto.response.user.UserResponse;
 import com.bangvan.efyp.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,6 +19,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/users")
@@ -74,6 +78,13 @@ public class UserController {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
+    @PutMapping("/update-password")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN', 'LECTURER','STUDENT')")
+    public ResponseEntity<ApiResponse> updatePassword(Principal principal, @Valid @RequestBody ChangePasswordRequest request){
+        log.info("change username: {} password request: {}",principal.getName(), request);
+        ApiResponse apiResponse = ApiResponse.success(200, "Password updated successfully",userService.changePassword(principal, request));
+        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
+    }
 
 
 }

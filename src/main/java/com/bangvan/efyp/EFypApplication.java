@@ -1,11 +1,12 @@
 package com.bangvan.efyp;
 
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
+@Slf4j
 @SpringBootApplication
 public class EFypApplication {
 
@@ -18,6 +19,6 @@ public class EFypApplication {
 
     @PostConstruct
     public void printEnvironmentInfo() {
-        System.out.println("environmentInfo: " + environmentInfo);
+        log.info("environmentInfo: " + environmentInfo);
     }
 }

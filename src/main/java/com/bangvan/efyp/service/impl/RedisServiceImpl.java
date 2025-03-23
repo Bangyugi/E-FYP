@@ -77,8 +77,5 @@ public class RedisServiceImpl implements RedisService {
         redisTemplate.expire(key, timeToLive, TimeUnit.MILLISECONDS);
     }
 
-    @Override
-    public void flushAll() {
-        redisTemplate.getConnectionFactory().getConnection().flushAll();
-    }
+
 }
