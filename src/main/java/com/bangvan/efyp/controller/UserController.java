@@ -33,7 +33,7 @@ public class UserController {
 
     @Operation(summary = "Create User", description = "Create User")
     @PostMapping("/create")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN')")
+//    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN')")
     public ResponseEntity<ApiResponse> createUser(@Valid @RequestBody UserCreationRequest request){
         log.info("Request: {}", request);
         ApiResponse apiResponse = ApiResponse.success(201, "User created successfully", userService.createUser(request));
@@ -42,7 +42,7 @@ public class UserController {
 
     @Operation(summary = "Update User", description = "Update User")
     @PutMapping("/update/{userId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN')")
+//    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN')")
     public ResponseEntity<ApiResponse> updateUser(@PathVariable Long userId, @Valid @RequestBody UpdateProfileRequest request){
         ApiResponse apiResponse = ApiResponse.success(200, "User updated successfully", userService.updateUser(userId, request));
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
@@ -50,7 +50,7 @@ public class UserController {
 
     @Operation(summary = "Delete User", description = "Delete User")
     @DeleteMapping("/delete/{userId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN')")
+//    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN')")
     public ResponseEntity<ApiResponse> deleteUser(@PathVariable Long userId){
         ApiResponse apiResponse = ApiResponse.success(200, "User deleted successfully", userService.deleteUser(userId));
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
@@ -58,7 +58,7 @@ public class UserController {
 
     @Operation(summary = "Find User By Id", description = "Find User By Id")
     @GetMapping("/find/{userId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN', 'LECTURER','STUDENT')")
+//    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN', 'LECTURER','STUDENT')")
     public ResponseEntity<ApiResponse> findUserById(@PathVariable Long userId){
         ApiResponse apiResponse = ApiResponse.success(200, "User found successfully", userService.findUserById(userId));
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
@@ -66,7 +66,7 @@ public class UserController {
 
     @Operation(summary = "Find All Users", description = "Find All Users")
     @GetMapping("/find-all")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN','LECTURER')")
+//    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN','LECTURER')")
     public ResponseEntity<ApiResponse> findAllUsers(
             @RequestParam(value= "pageNo", defaultValue = "1", required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
@@ -79,7 +79,7 @@ public class UserController {
     }
 
     @PutMapping("/update-password")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN', 'LECTURER','STUDENT')")
+//    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN', 'LECTURER','STUDENT')")
     public ResponseEntity<ApiResponse> updatePassword(Principal principal, @Valid @RequestBody ChangePasswordRequest request){
         log.info("change username: {} password request: {}",principal.getName(), request);
         ApiResponse apiResponse = ApiResponse.success(200, "Password updated successfully",userService.changePassword(principal, request));

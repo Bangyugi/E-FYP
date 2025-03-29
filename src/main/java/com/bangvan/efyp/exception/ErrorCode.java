@@ -34,7 +34,8 @@ public enum ErrorCode {
     UNAUTHENTICATED(403,"User unauthenticated" , HttpStatus.BAD_REQUEST),
     ACCESS_DENIED(403, "Access denied", HttpStatus.FORBIDDEN),
     ROLE_NOT_FOUND(403, "Role not found", HttpStatus.BAD_REQUEST),
-    INVALID_TOKEN(403, "Invalid JWT token", HttpStatus.FORBIDDEN);
+    INVALID_TOKEN(403, "Invalid JWT token", HttpStatus.FORBIDDEN),
+    INVALID_USER_TYPE(403, "Invalid user type", HttpStatus.FORBIDDEN),;
 
 
     ErrorCode(int code, String message, HttpStatus status) {
