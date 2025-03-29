@@ -5,11 +5,12 @@ import com.bangvan.efyp.dto.request.user.UpdateProfileRequest;
 import com.bangvan.efyp.dto.request.user.UserCreationRequest;
 import com.bangvan.efyp.dto.response.PageCustomResponse;
 import com.bangvan.efyp.dto.response.user.UserResponse;
-import com.bangvan.efyp.entity.Role;
-import com.bangvan.efyp.entity.User;
+import com.bangvan.efyp.entity.*;
 import com.bangvan.efyp.exception.AppException;
 import com.bangvan.efyp.exception.ErrorCode;
 import com.bangvan.efyp.exception.ResourceNotFoundException;
+import com.bangvan.efyp.repository.FacultyRepository;
+import com.bangvan.efyp.repository.MajorRepository;
 import com.bangvan.efyp.repository.RoleRepository;
 import com.bangvan.efyp.repository.UserRepository;
 import com.bangvan.efyp.service.UserService;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -34,8 +36,10 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final MajorRepository majorRepository;
+    private final FacultyRepository facultyRepository;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public UserResponse createUser(UserCreationRequest request){
         log.info("Creating user based on user request");
@@ -47,16 +51,67 @@ public class UserServiceImpl implements UserService {
             throw new AppException(ErrorCode.PHONE_EXISTED);
         }
 
-        if (userRepository.existsByUsername(request.getEmail())){
+        if (userRepository.existsByUsername(request.getUsername())){
             throw new AppException(ErrorCode.USERNAME_EXISTED);
         }
 
-        User user = modelMapper.map(request, User.class);
+        User user;
 
-        Role role = roleRepository.findByName("ROLE_STUDENT").orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND));
+        switch (request.getUserType().toUpperCase()){
+            case "STUDENT":
+                Student student = modelMapper.map(request, Student.class);
+                student.setPassword(passwordEncoder.encode(request.getPassword()));
+                student.setRoles(Set.of(roleRepository.findByName("ROLE_STUDENT")
+                        .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND))));
+                if (request.getMajorName() != null) {
+                    Optional<Major> major = majorRepository.getByName(request.getMajorName());
+                    if (major.isPresent()) {
+                        student.setMajor(major.get());
+                    } else {
+                        Major newMajor = new Major();
+                        newMajor.setName(request.getMajorName());
+                        newMajor = majorRepository.save(newMajor);
+                        student.setMajor(newMajor);
+                    }
+                }
+                user = student;
+                break;
+            case "ADVISOR":
+                Advisor advisor = modelMapper.map(request, Advisor.class);
+                advisor.setPassword(passwordEncoder.encode(request.getPassword()));
+                advisor.setRoles(Set.of(roleRepository.findByName("ROLE_ADVISOR")
+                        .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND))));
+                if (request.getFacultyName() !=null){
+                    Optional<Faculty> faculty = facultyRepository.getByName(request.getFacultyName());
+                    if (faculty.isPresent()) {
+                        advisor.setFaculty(faculty.get());
+                    } else {
+                        Faculty newFaculty = new Faculty();
+                        newFaculty.setName(request.getFacultyName());
+                        newFaculty = facultyRepository.save(newFaculty);
+                        advisor.setFaculty(newFaculty);
+                    }
+                }
+                user = advisor;
+                break;
+            case "ADMIN":
+                User admin = modelMapper.map(request, User.class);
+                admin.setPassword(passwordEncoder.encode(request.getPassword()));
+                admin.setRoles(Set.of(roleRepository.findByName("ROLE_ADMIN")
+                        .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND))));
+                user = admin;
+                break;
+            case "SUPERADMIN":
+                User superAdmin = modelMapper.map(request, User.class);
+                superAdmin.setPassword(passwordEncoder.encode(request.getPassword()));
+                superAdmin.setRoles(Set.of(roleRepository.findByName("ROLE_SUPERADMIN")
+                        .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND))));
+                user = superAdmin;
+                break;
 
-        user.setRoles(Set.of(role));
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+            default:
+                throw new AppException(ErrorCode.INVALID_USER_TYPE);
+        }
 
         log.info("Saving user to database");
         user= userRepository.save(user);

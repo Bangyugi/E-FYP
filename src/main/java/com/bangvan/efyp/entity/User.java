@@ -22,6 +22,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
 public class User extends AbstractEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,11 +51,6 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(name = "avatar")
     String avatar = "https://cdn-icons-png.flaticon.com/512/3607/3607444.png";
 
-    @Column(name = "otp")
-    String otp;
-
-    @Column(name = "otp_expiration")
-    LocalDateTime otpExpiration;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "gender")
@@ -61,6 +58,9 @@ public class User extends AbstractEntity implements UserDetails {
 
     @Column(name = "enabled")
     Boolean enabled = true;
+
+    @Column(name = "birth_date")
+    LocalDateTime birthDate;
 
     @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinTable(

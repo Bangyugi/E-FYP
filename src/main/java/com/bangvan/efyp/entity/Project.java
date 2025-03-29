@@ -60,9 +60,8 @@ public class Project extends AbstractEntity{
     @Column(name = "author_name", nullable = false)
     private String authorName;
 
-    @Column(name = "author_profile", columnDefinition = "TEXT")
-    private String authorProfile;
-
+    @Column(name = "advisor_name", nullable = false)
+    private String advisorName;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
