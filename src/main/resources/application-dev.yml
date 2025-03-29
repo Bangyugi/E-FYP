@@ -9,12 +9,16 @@ spring:
         username: postgres
         password: 5zm7aa8o
     jpa:
-        properties:
+      properties:
             hibernate:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
-        show-sql: true
-        hibernate:
-            ddl-auto: update
+      show-sql: true
+      hibernate:
+          ddl-auto: create
+      defer-datasource-initialization: true
+    sql:
+      init:
+        mode: always
     mail:
         host: smtp.gmail.com
         port: 587

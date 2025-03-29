@@ -1,6 +1,7 @@
 package com.bangvan.efyp.controller;
 
 import com.bangvan.efyp.dto.request.auth.LoginRequest;
+import com.bangvan.efyp.dto.request.user.RegisterRequest;
 import com.bangvan.efyp.dto.response.ApiResponse;
 import com.bangvan.efyp.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,6 +28,22 @@ public class AuthenticationController {
     @PostMapping(value = "/login")
     public ResponseEntity<ApiResponse>login (@RequestBody LoginRequest loginRequest){
         ApiResponse authentication =  ApiResponse.success(200, "User logged in successfully", authenticationService.login(loginRequest));
+
+        return new ResponseEntity<>(authentication, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Register", description = "Register API")
+    @PostMapping(value = "/register")
+    public ResponseEntity<ApiResponse> register (@RequestBody RegisterRequest request){
+        ApiResponse authentication =  ApiResponse.success(200, "User registered successfully", authenticationService.register(request));
+
+        return new ResponseEntity<>(authentication, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Refresh Token", description = "Refresh Token API")
+    @PostMapping(value = "/refreshtoken")
+    public ResponseEntity<ApiResponse> refreshToken (String refreshToken){
+        ApiResponse authentication =  ApiResponse.success(200, "User logged in successfully", authenticationService.refreshToken(refreshToken));
 
         return new ResponseEntity<>(authentication, HttpStatus.OK);
     }
