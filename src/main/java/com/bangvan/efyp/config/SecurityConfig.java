@@ -1,7 +1,6 @@
 package com.bangvan.efyp.config;
 
 
-import com.bangvan.efyp.service.impl.CustomUserDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,11 +28,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter requestFilter;
-    private final CustomUserDetailService customUserDetailService;
-    private final JwtAuthenticationEntrypoint jwtAuthEntryPointConfig;
-    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-
     private static final String[] PUBLIC_ENDPOINT = new String[]{
            "/auth/**",
     };
@@ -50,28 +44,15 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(PUBLIC_ENDPOINT).permitAll()
                         .anyRequest().authenticated())
-                .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(jwtAuthEntryPointConfig).accessDeniedHandler(jwtAccessDeniedHandler))
-                .addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return httpSecurity.build();
 
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
-        return configuration.getAuthenticationManager();
-    }
 
 
 
-    @Bean
-    public AuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        authenticationProvider.setUserDetailsService(customUserDetailService);
-        return authenticationProvider;
-    }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
