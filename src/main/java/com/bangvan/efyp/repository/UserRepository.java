@@ -20,4 +20,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     boolean existsByUsername(String username);
 
 
+    boolean existsByEmailAndUserIdNot(String email, Long userId);
+
+    boolean existsByPhoneAndUserIdNot(String phone, Long userId);
 }

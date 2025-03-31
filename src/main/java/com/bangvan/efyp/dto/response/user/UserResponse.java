@@ -5,6 +5,7 @@ import com.bangvan.efyp.utils.Gender;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.io.Serializable;
 import java.util.Set;
 
 @Getter
@@ -13,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
-public class UserResponse {
+public class UserResponse  {
     Long userId;
     String username;
     String email;
@@ -23,5 +24,6 @@ public class UserResponse {
     String avatar;
     Gender gender;
     Boolean enabled;
+//    String userType;
     Set<Role> roles;
 }
