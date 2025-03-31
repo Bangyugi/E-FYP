@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -38,7 +40,7 @@ public class UserCreationRequest {
     @NotBlank
     private String birthDate;
 
-    private String avatar;
+    private String avatar = "https://cdn-icons-png.flaticon.com/512/3607/3607444.png";
 
     private Gender gender;
 
@@ -49,11 +51,11 @@ public class UserCreationRequest {
     @NotBlank
     private String userType;
 
-    private String roles;
+    private String roleName;
 
     // Các trường bổ sung dành riêng cho Student
     private String majorName;
-    private Integer graduationYear;
+    private LocalDate graduationTime;
 
     // Các trường bổ sung dành riêng cho Advisor
     private String facultyName;

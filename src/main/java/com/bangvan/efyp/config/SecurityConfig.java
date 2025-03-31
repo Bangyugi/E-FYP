@@ -48,9 +48,8 @@ public class SecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(request -> request
-//                        .requestMatchers(PUBLIC_ENDPOINT).permitAll()
-//                        .anyRequest().authenticated())
-                        .anyRequest().permitAll())
+                        .requestMatchers(PUBLIC_ENDPOINT).permitAll()
+                        .anyRequest().authenticated())
                 .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(jwtAuthEntryPointConfig).accessDeniedHandler(jwtAccessDeniedHandler))
                 .addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

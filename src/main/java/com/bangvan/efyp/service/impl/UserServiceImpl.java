@@ -4,6 +4,8 @@ import com.bangvan.efyp.dto.request.user.ChangePasswordRequest;
 import com.bangvan.efyp.dto.request.user.UpdateProfileRequest;
 import com.bangvan.efyp.dto.request.user.UserCreationRequest;
 import com.bangvan.efyp.dto.response.PageCustomResponse;
+import com.bangvan.efyp.dto.response.user.AdvisorResponse;
+import com.bangvan.efyp.dto.response.user.StudentResponse;
 import com.bangvan.efyp.dto.response.user.UserResponse;
 import com.bangvan.efyp.entity.*;
 import com.bangvan.efyp.exception.AppException;
@@ -39,12 +41,27 @@ public class UserServiceImpl implements UserService {
     private final MajorRepository majorRepository;
     private final FacultyRepository facultyRepository;
 
+
+
+
+    private UserResponse mapUserResponseByUserType(User user) {
+        if (user instanceof Student) {
+            return modelMapper.map(user, StudentResponse.class);
+        }
+
+        if (user instanceof Advisor) {
+            return modelMapper.map(user, AdvisorResponse.class);
+        }
+
+        return modelMapper.map(user, UserResponse.class);
+    }
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public UserResponse createUser(UserCreationRequest request){
         log.info("Creating user based on user request");
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new AppException(ErrorCode.USERNAME_EXISTED);
+            throw new AppException(ErrorCode.EMAIL_EXISTED);
         }
 
         if (userRepository.existsByPhone(request.getPhone())){
@@ -57,7 +74,7 @@ public class UserServiceImpl implements UserService {
 
         User user;
 
-        switch (request.getUserType().toUpperCase()){
+        switch (request.getUserType().toUpperCase()) {
             case "STUDENT":
                 Student student = modelMapper.map(request, Student.class);
                 student.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -74,6 +91,9 @@ public class UserServiceImpl implements UserService {
                         student.setMajor(newMajor);
                     }
                 }
+                if (request.getGraduationTime() != null) {
+                    student.setGraduationTime(request.getGraduationTime());
+                }
                 user = student;
                 break;
             case "ADVISOR":
@@ -81,7 +101,7 @@ public class UserServiceImpl implements UserService {
                 advisor.setPassword(passwordEncoder.encode(request.getPassword()));
                 advisor.setRoles(Set.of(roleRepository.findByName("ROLE_ADVISOR")
                         .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND))));
-                if (request.getFacultyName() !=null){
+                if (request.getFacultyName() != null) {
                     Optional<Faculty> faculty = facultyRepository.getByName(request.getFacultyName());
                     if (faculty.isPresent()) {
                         advisor.setFaculty(faculty.get());
@@ -94,36 +114,82 @@ public class UserServiceImpl implements UserService {
                 }
                 user = advisor;
                 break;
-            case "ADMIN":
+            case "USER":
                 User admin = modelMapper.map(request, User.class);
                 admin.setPassword(passwordEncoder.encode(request.getPassword()));
-                admin.setRoles(Set.of(roleRepository.findByName("ROLE_ADMIN")
+                admin.setRoles(Set.of(roleRepository.findByName(request.getRoleName())
                         .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND))));
                 user = admin;
-                break;
-            case "SUPERADMIN":
-                User superAdmin = modelMapper.map(request, User.class);
-                superAdmin.setPassword(passwordEncoder.encode(request.getPassword()));
-                superAdmin.setRoles(Set.of(roleRepository.findByName("ROLE_SUPERADMIN")
-                        .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND))));
-                user = superAdmin;
                 break;
 
             default:
                 throw new AppException(ErrorCode.INVALID_USER_TYPE);
+
         }
 
         log.info("Saving user to database");
         user= userRepository.save(user);
-        return modelMapper.map(user, UserResponse.class);
+        return mapUserResponseByUserType(user);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public UserResponse updateUser(Long userId, UpdateProfileRequest request){
+        log.info("Updating user with ID: {}", userId);
         User user = userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("user","userId",userId));
-        modelMapper.map(request,user);
-        user=userRepository.save(user);
-        return modelMapper.map(user, UserResponse.class);
+        // Check email, phone trùng (trừ khi là chính user hiện tại)
+        if (userRepository.existsByEmailAndUserIdNot(request.getEmail(), userId)) {
+            throw new AppException(ErrorCode.EMAIL_EXISTED);
+        }
+        if (userRepository.existsByPhoneAndUserIdNot(request.getPhone(), userId)) {
+            throw new AppException(ErrorCode.PHONE_EXISTED);
+        }
+        switch (request.getUserType().toUpperCase()) {
+            case "STUDENT":
+                if (!(user instanceof Student student)){
+                    throw new AppException(ErrorCode.INVALID_USER_TYPE);
+                }
+                modelMapper.map(request,user);
+                if (request.getMajorName() != null){
+                    Major major = majorRepository.getByName(request.getMajorName())
+                            .orElseGet(()->{
+                                Major newMajor = new Major();
+                                newMajor.setName(request.getMajorName());
+                                return majorRepository.save(newMajor);
+                            });
+                    student.setMajor(major);
+                }
+                if (request.getGraduationTime() != null) {
+                    student.setGraduationTime(request.getGraduationTime());
+                }
+                break;
+            case "ADVISOR":
+                if (!(user instanceof Advisor advisor)){
+                    throw new AppException(ErrorCode.INVALID_USER_TYPE);
+                }
+                modelMapper.map(request,user);
+                if (request.getFacultyName() != null){
+                    Faculty faculty = facultyRepository.getByName(request.getFacultyName())
+                            .orElseGet(()->{
+                                Faculty newFaculty = new Faculty();
+                                newFaculty.setName(request.getFacultyName());
+                                return facultyRepository.save(newFaculty);
+                            });
+                    advisor.setFaculty(faculty);
+                }
+                break;
+            case "USER":
+                if (user == null){
+                    throw new AppException(ErrorCode.INVALID_USER_TYPE);
+                }
+                modelMapper.map(request,user);
+                break;
+            default:
+                throw new AppException(ErrorCode.INVALID_USER_TYPE);
+        }
+        user = userRepository.save(user);
+        return mapUserResponseByUserType(user);
+
     }
 
     @Override
@@ -138,8 +204,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse findUserById(Long userId){
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("user", "userId", userId));
-        return modelMapper.map(user,UserResponse.class);
-
+        return mapUserResponseByUserType(user);
     }
 
     @Override
@@ -150,8 +215,7 @@ public class UserServiceImpl implements UserService {
                 .pageSize(page.getSize())
                 .totalPages(page.getTotalPages())
                 .totalElements(page.getTotalElements())
-                .pageContent(page.getContent().stream().map(user->
-                    modelMapper.map(user,UserResponse.class)
+                .pageContent(page.getContent().stream().map(this::mapUserResponseByUserType
                 ).toList())
                 .build();
     }
@@ -165,7 +229,7 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         user=userRepository.save(user);
-        return modelMapper.map(user, UserResponse.class);
+        return mapUserResponseByUserType(user);
     }
 
 

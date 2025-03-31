@@ -1,8 +1,8 @@
 INSERT INTO roles ( name, description) VALUES
-                                                   ('ROLE_STUDENT', 'US-01'),
-                                                   ('ROLE_ADVISOR', 'US-02'),
-                                                   ( 'ROLE_SUPERADMIN', 'US-03'),
-                                                   ( 'ROLE_ADMIN', 'US-04');
+   ('ROLE_STUDENT', 'US-01'),
+   ('ROLE_ADVISOR', 'US-02'),
+   ( 'ROLE_ADMIN', 'US-03'),
+   ( 'ROLE_SUPERADMIN', 'US-04');
 
 
 INSERT INTO faculties ( name, description)
@@ -59,14 +59,21 @@ VALUES
 
 INSERT INTO users (username,password,email,phone,first_name,last_name,birth_date,avatar,gender,enabled,user_type,created_at,updated_at)
 VALUES
-    ( '2022800001', '$2a$10$9hWPtTSDFsBhJB5fblv9tOuuVDUuw9e3c4BBHoJSwtP5', 'admin1@gmail.com', '0341234001', 'Trần', 'Văn A', '1970-01-01', 'https://cdn-icons-png.flaticon.com/512/3607/3607444.png', 'MALE', TRUE, 'ADMIN', NOW(), NOW()),
-    ( '2022800002', '$2a$10$9hWPtTSDFsBhJB5fblv9tOuuVDUuw9e3c4BBHoJSwtP5', 'admin2@gmail.com', '0341234002', 'Lê', 'Thị B', '1972-02-02', 'https://cdn-icons-png.flaticon.com/512/3607/3607444.png', 'FEMALE', TRUE, 'ADMIN', NOW(), NOW()),
-    ('2022800003', '$2a$10$9hWPtTSDFsBhJB5fblv9tOuuVDUuw9e3c4BBHoJSwtP5', 'admin3@gmail.com', '0341234003', 'Phạm', 'Văn C', '1974-03-03', 'https://cdn-icons-png.flaticon.com/512/3607/3607444.png', 'MALE', TRUE, 'ADMIN', NOW(), NOW()),
-    ( '2022800004', '$2a$10$9hWPtTSDFsBhJB5fblv9tOuuVDUuw9e3c4BBHoJSwtP5', 'admin4@gmail.com', '0341234004', 'Nguyễn', 'Thị D', '1976-04-04', 'https://cdn-icons-png.flaticon.com/512/3607/3607444.png', 'FEMALE', TRUE, 'ADMIN', NOW(), NOW()),
-    ( '2022800005', '$2a$10$9hWPtTSDFsBhJB5fblv9tOuuVDUuw9e3c4BBHoJSwtP5', 'admin5@gmail.com', '0341234005', 'Hoàng', 'Văn E', '1978-05-05', 'https://cdn-icons-png.flaticon.com/512/3607/3607444.png', 'MALE', TRUE, 'ADMIN', NOW(), NOW());
+    ( '2022800001', '$2a$10$9hWPtTSDFsBhJB5fblv9tOuuVDUuw9e3c4BBHoJSwtP5', 'admin1@gmail.com', '0341234001', 'Trần', 'Văn A', '1970-01-01', 'https://cdn-icons-png.flaticon.com/512/3607/3607444.png', 'MALE', TRUE, 'USER', NOW(), NOW()),
+    ( '2022800002', '$2a$10$9hWPtTSDFsBhJB5fblv9tOuuVDUuw9e3c4BBHoJSwtP5', 'admin2@gmail.com', '0341234002', 'Lê', 'Thị B', '1972-02-02', 'https://cdn-icons-png.flaticon.com/512/3607/3607444.png', 'FEMALE', TRUE, 'USER', NOW(), NOW()),
+    ('2022800003', '$2a$10$9hWPtTSDFsBhJB5fblv9tOuuVDUuw9e3c4BBHoJSwtP5', 'admin3@gmail.com', '0341234003', 'Phạm', 'Văn C', '1974-03-03', 'https://cdn-icons-png.flaticon.com/512/3607/3607444.png', 'MALE', TRUE, 'USER', NOW(), NOW()),
+    ( '2022800004', '$2a$10$9hWPtTSDFsBhJB5fblv9tOuuVDUuw9e3c4BBHoJSwtP5', 'admin4@gmail.com', '0341234004', 'Nguyễn', 'Thị D', '1976-04-04', 'https://cdn-icons-png.flaticon.com/512/3607/3607444.png', 'FEMALE', TRUE, 'USER', NOW(), NOW()),
+    ( '2022800005', '$2a$10$9hWPtTSDFsBhJB5fblv9tOuuVDUuw9e3c4BBHoJSwtP5', 'admin5@gmail.com', '0341234005', 'Hoàng', 'Văn E', '1978-05-05', 'https://cdn-icons-png.flaticon.com/512/3607/3607444.png', 'MALE', TRUE, 'USER', NOW(), NOW());
 
 INSERT INTO users (username,password,email,phone,first_name,last_name,birth_date,avatar,gender,enabled,user_type,created_at,updated_at)
 VALUES
-    ( '2022900001', '$2a$10$FiqGELBJ1ByXPHQz9CY5LuZAdwChfuEWsyHaphWmKBYaRFbXNcHZK', 'bangyugi@gmail.com', '0334236824', 'Trần', 'Văn Bằng', '2004-08-22', 'https://cdn-icons-png.flaticon.com/512/3607/3607444.png', 'MALE', TRUE, 'SUPERADMIN', NOW(), NOW()),
-    ( '2022900002', '$2a$10$FiqGELBJ1ByXPHQz9CY5LuZAdwChfuEWsyHaphWmKBYaRFbXNcHZK', 'superadmin2@gmail.com', '0352324678', 'Nguyễn', 'Thị Lan', '1968-11-22', 'https://cdn-icons-png.flaticon.com/512/3607/3607444.png', 'FEMALE', TRUE, 'SUPERADMIN', NOW(), NOW()),
-    ( '2022900003', '$2a$10$FiqGELBJ1ByXPHQz9CY5LuZAdwChfuEWsyHaphWmKBYaRFbXNcHZK', 'superadmin3@gmail.com', '0359874896', 'Trần', 'Văn Minh', '1970-03-30', 'https://cdn-icons-png.flaticon.com/512/3607/3607444.png', 'MALE', TRUE, 'SUPERADMIN', NOW(), NOW());
+    ( 'bangyugi', '$2a$10$FiqGELBJ1ByXPHQz9CY5LuZAdwChfuEWsyHaphWmKBYaRFbXNcHZK', 'bangyugi@gmail.com', '0334236824', 'Trần', 'Văn Bằng', '2004-08-22', 'https://cdn-icons-png.flaticon.com/512/3607/3607444.png', 'MALE', TRUE, 'USER', NOW(), NOW()),
+    ( '2022900002', '$2a$10$FiqGELBJ1ByXPHQz9CY5LuZAdwChfuEWsyHaphWmKBYaRFbXNcHZK', 'superadmin2@gmail.com', '0352324678', 'Nguyễn', 'Thị Lan', '1968-11-22', 'https://cdn-icons-png.flaticon.com/512/3607/3607444.png', 'FEMALE', TRUE, 'USER', NOW(), NOW()),
+    ( '2022900003', '$2a$10$FiqGELBJ1ByXPHQz9CY5LuZAdwChfuEWsyHaphWmKBYaRFbXNcHZK', 'superadmin3@gmail.com', '0359874896', 'Trần', 'Văn Minh', '1970-03-30', 'https://cdn-icons-png.flaticon.com/512/3607/3607444.png', 'MALE', TRUE, 'USER', NOW(), NOW());
+
+
+INSERT INTO user_role(user_id,role_id) VALUES
+    (1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),(8,1),(9,1),(10,1),
+    (11,2),(12,2),(13,2),(14,2),(15,2),(16,2),(17,2),(18,2),(19,2),(20,2),
+    (21,3),(22,3),(23,3),(24,3),(25,3),
+    (26,4),(27,4),(28,4);
