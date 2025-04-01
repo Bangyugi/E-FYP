@@ -1,7 +1,7 @@
 package com.bangvan.efyp.service.impl;
 
 import com.bangvan.efyp.dto.request.auth.LoginRequest;
-import com.bangvan.efyp.dto.request.user.RegisterRequest;
+import com.bangvan.efyp.dto.request.auth.RegisterRequest;
 import com.bangvan.efyp.dto.response.TokenResponse;
 import com.bangvan.efyp.dto.response.user.AdvisorResponse;
 import com.bangvan.efyp.dto.response.user.StudentResponse;
@@ -65,7 +65,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public TokenResponse login(LoginRequest loginRequest) {
         User user = userRepository.findByUsername(loginRequest.getUsername())
                 .orElseThrow(() -> new AppException(ErrorCode.ACCESS_DENIED));

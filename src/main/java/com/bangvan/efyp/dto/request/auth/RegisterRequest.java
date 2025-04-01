@@ -1,10 +1,9 @@
-package com.bangvan.efyp.dto.request.user;
+package com.bangvan.efyp.dto.request.auth;
 
 
 import com.bangvan.efyp.utils.Gender;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
