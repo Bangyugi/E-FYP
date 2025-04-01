@@ -1,7 +1,7 @@
 package com.bangvan.efyp.controller;
 
 import com.bangvan.efyp.dto.request.auth.LoginRequest;
-import com.bangvan.efyp.dto.request.user.RegisterRequest;
+import com.bangvan.efyp.dto.request.auth.RegisterRequest;
 import com.bangvan.efyp.dto.response.ApiResponse;
 import com.bangvan.efyp.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
