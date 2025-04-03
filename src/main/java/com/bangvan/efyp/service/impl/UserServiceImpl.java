@@ -2,7 +2,7 @@ package com.bangvan.efyp.service.impl;
 
 import com.bangvan.efyp.dto.request.user.ChangePasswordRequest;
 import com.bangvan.efyp.dto.request.user.UpdateProfileRequest;
-import com.bangvan.efyp.dto.request.user.UserCreationRequest;
+import com.bangvan.efyp.dto.request.user.CreateUserRequest;
 import com.bangvan.efyp.dto.response.PageCustomResponse;
 import com.bangvan.efyp.dto.response.user.AdvisorResponse;
 import com.bangvan.efyp.dto.response.user.StudentResponse;
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public UserResponse createUser(UserCreationRequest request){
+    public UserResponse createUser(CreateUserRequest request){
         log.info("Creating user based on user request");
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new AppException(ErrorCode.EMAIL_EXISTED);

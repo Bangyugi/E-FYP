@@ -44,7 +44,8 @@ public class UpdateProfileRequest {
 
     // Các trường bổ sung dành riêng cho Student
     private String majorName;
-    private LocalDate GraduationTime;
+
+    private LocalDate graduationTime;
 
     // Các trường bổ sung dành riêng cho Advisor
     private String facultyName;

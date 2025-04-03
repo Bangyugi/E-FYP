@@ -6,7 +6,7 @@ import static org.mockito.Mockito.*;
 
 import com.bangvan.efyp.dto.request.user.ChangePasswordRequest;
 import com.bangvan.efyp.dto.request.user.UpdateProfileRequest;
-import com.bangvan.efyp.dto.request.user.UserCreationRequest;
+import com.bangvan.efyp.dto.request.user.CreateUserRequest;
 import com.bangvan.efyp.dto.response.PageCustomResponse;
 import com.bangvan.efyp.dto.response.user.UserResponse;
 import com.bangvan.efyp.entity.Role;
@@ -56,7 +56,7 @@ class UserServiceTest {
     @DisplayName("createUser: Tạo người dùng thành công")
     void testCreateUserSuccess() {
         // Chuẩn bị dữ liệu
-        UserCreationRequest request = new UserCreationRequest();
+        CreateUserRequest request = new CreateUserRequest();
         request.setEmail("test@gmail.com");
         request.setPhone("123456789");
         request.setPassword("password");
@@ -123,7 +123,7 @@ class UserServiceTest {
     @Test
     @DisplayName("createUser: Ném exception khi email đã tồn tại")
     void testCreateUserExistingEmail() {
-        UserCreationRequest request = new UserCreationRequest();
+        CreateUserRequest request = new CreateUserRequest();
         request.setEmail("test@gmail.com");
         request.setPhone("123456789");
 

@@ -11,6 +11,7 @@ public enum ErrorCode {
     USER_UNAUTHENTICATED(1003, "User is not authenticated", HttpStatus.UNAUTHORIZED),
     USER_LOGGED_OUT(1004, "User is logged out", HttpStatus.UNAUTHORIZED),
     USER_TOKEN_INCORRECT(1005, "User token is incorrect", HttpStatus.FORBIDDEN),
+    USER_NOT_FOUND(404, "User not found", HttpStatus.NOT_FOUND),
 
     EMAIL_EXISTED(1006, "Email already exists", HttpStatus.BAD_REQUEST),
     EMAIL_NOT_FOUND(1007, "Email not found", HttpStatus.NOT_FOUND),
@@ -35,7 +36,9 @@ public enum ErrorCode {
     ACCESS_DENIED(403, "Access denied", HttpStatus.FORBIDDEN),
     ROLE_NOT_FOUND(403, "Role not found", HttpStatus.BAD_REQUEST),
     INVALID_TOKEN(403, "Invalid JWT token", HttpStatus.FORBIDDEN),
-    INVALID_USER_TYPE(403, "Invalid user type", HttpStatus.FORBIDDEN),;
+    INVALID_USER_TYPE(403, "Invalid user type", HttpStatus.FORBIDDEN),
+
+    PROJECT_NOT_FOUND(404, "Project not found", HttpStatus.NOT_FOUND),;
 
 
     ErrorCode(int code, String message, HttpStatus status) {

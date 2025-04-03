@@ -111,4 +111,6 @@ public class User extends AbstractEntity implements UserDetails {
     private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
         in.defaultReadObject();
     }
+
+
 }
