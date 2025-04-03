@@ -3,9 +3,8 @@ package com.bangvan.efyp.controller;
 
 import com.bangvan.efyp.dto.request.user.ChangePasswordRequest;
 import com.bangvan.efyp.dto.request.user.UpdateProfileRequest;
-import com.bangvan.efyp.dto.request.user.UserCreationRequest;
+import com.bangvan.efyp.dto.request.user.CreateUserRequest;
 import com.bangvan.efyp.dto.response.ApiResponse;
-import com.bangvan.efyp.dto.response.user.UserResponse;
 import com.bangvan.efyp.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,7 +33,7 @@ public class UserController {
     @Operation(summary = "Create User", description = "Create User")
     @PostMapping("/create")
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN')")
-    public ResponseEntity<ApiResponse> createUser(@Valid @RequestBody UserCreationRequest request){
+    public ResponseEntity<ApiResponse> createUser(@Valid @RequestBody CreateUserRequest request){
         log.info("Request: {}", request);
         ApiResponse apiResponse = ApiResponse.success(201, "User created successfully", userService.createUser(request));
         return new ResponseEntity<>(apiResponse, HttpStatus.CREATED);

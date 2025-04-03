@@ -77,3 +77,74 @@ INSERT INTO user_role(user_id,role_id) VALUES
     (11,2),(12,2),(13,2),(14,2),(15,2),(16,2),(17,2),(18,2),(19,2),(20,2),
     (21,3),(22,3),(23,3),(24,3),(25,3),
     (26,4),(27,4),(28,4);
+
+INSERT INTO categories ( name, description, created_at, updated_at)
+VALUES
+    ('E-Commerce', 'Category for E-Commerce projects', '2025-04-02', '2025-04-02'),
+    ('Game Development', 'Category for Game Development projects', '2025-04-02', '2025-04-02'),
+    ('Artificial Intelligence', 'Category for Artificial Intelligence projects', '2025-04-02', '2025-04-02');
+
+INSERT INTO tags (name, description, created_at, updated_at)
+VALUES
+    ('e-commerce', 'Tag: e-commerce', '2025-04-02', '2025-04-02'),
+    ('microservices', 'Tag: microservices', '2025-04-02', '2025-04-02'),
+    ('cloud', 'Tag: cloud', '2025-04-02', '2025-04-02'),
+    ('AI', 'Tag: AI', '2025-04-02', '2025-04-02'),
+    ('analytics', 'Tag: analytics', '2025-04-02', '2025-04-02'),
+    ('big data', 'Tag: big data', '2025-04-02', '2025-04-02'),
+    ('retail', 'Tag: retail', '2025-04-02', '2025-04-02'),
+    ('MMORPG', 'Tag: MMORPG', '2025-04-02', '2025-04-02'),
+    ('multiplayer', 'Tag: multiplayer', '2025-04-02', '2025-04-02'),
+    ('fantasy', 'Tag: fantasy', '2025-04-02', '2025-04-02'),
+    ('arcade', 'Tag: arcade', '2025-04-02', '2025-04-02'),
+    ('retro', 'Tag: retro', '2025-04-02', '2025-04-02'),
+    ('deep learning', 'Tag: deep learning', '2025-04-02', '2025-04-02'),
+    ('image recognition', 'Tag: image recognition', '2025-04-02', '2025-04-02');
+
+INSERT INTO technologies (name, description, created_at, updated_at)
+VALUES
+    ('Node.js', 'Technology: Node.js', '2025-04-02', '2025-04-02'),
+    ('React', 'Technology: React', '2025-04-02', '2025-04-02'),
+    ('AWS', 'Technology: AWS', '2025-04-02', '2025-04-02'),
+    ('Docker', 'Technology: Docker', '2025-04-02', '2025-04-02'),
+    ('Kubernetes', 'Technology: Kubernetes', '2025-04-02', '2025-04-02'),
+    ('Python', 'Technology: Python', '2025-04-02', '2025-04-02'),
+    ('Apache Spark', 'Technology: Apache Spark', '2025-04-02', '2025-04-02'),
+    ('Tableau', 'Technology: Tableau', '2025-04-02', '2025-04-02'),
+    ('Unity', 'Technology: Unity', '2025-04-02', '2025-04-02'),
+    ('C#', 'Technology: C#', '2025-04-02', '2025-04-02'),
+    ('Photon Engine', 'Technology: Photon Engine', '2025-04-02', '2025-04-02'),
+    ('C++', 'Technology: C++', '2025-04-02', '2025-04-02'),
+    ('SDL', 'Technology: SDL', '2025-04-02', '2025-04-02'),
+    ('TensorFlow', 'Technology: TensorFlow', '2025-04-02', '2025-04-02'),
+    ('Keras', 'Technology: Keras', '2025-04-02', '2025-04-02'),
+    ('OpenCV', 'Technology: OpenCV', '2025-04-02', '2025-04-02');
+
+INSERT INTO projects (title, abstractive, thumbnail, status, summission_date, upvote, downvote, project_information, repository_url, post, author_name, advisor_name, author_id, advisor_id, category_id, created_at, updated_at)
+VALUES
+    ('NextGen E-Commerce Platform', 'Một nền tảng thương mại điện tử cloud-native, có khả năng mở rộng cao dành cho thị trường bán lẻ hiện đại.', 'https://example.com/images/nextgen-ecommerce.png', 'ACTIVE', '2025-04-02', 50, 2, 'Dự án này nhằm cách mạng hóa trải nghiệm mua sắm trực tuyến bằng cách tích hợp cá nhân hóa dựa trên AI cùng kiến trúc microservices.', 'https://github.com/example/nextgen-ecommerce', 'Tài liệu chi tiết về thiết kế, triển khai và vận hành nền tảng NextGen E-Commerce.', 'Đinh Huy Hoàng', 'Phạm Thị Hoa', 1, 18, 1, '2025-04-02', '2025-04-02'),
+
+    ('Smart Retail Analytics', 'Công cụ phân tích thông minh dựa trên big data giúp tối ưu hóa chiến lược bán lẻ.', 'https://example.com/images/smart-retail.png', 'ACTIVE', '2025-04-02', 40, 1, 'Smart Retail Analytics thu thập và phân tích dữ liệu hành vi khách hàng, hỗ trợ các nhà bán lẻ nâng cao doanh số và hiệu quả vận hành.', 'https://github.com/example/smart-retail-analytics', 'Bài viết chi tiết về quy trình phân tích dữ liệu khách hàng và những kết quả thu được từ dự án.', 'Lê Minh Khánh', 'Lê Thị Lan', 5, NULL, 1, '2025-04-02', '2025-04-02'),
+
+    ('Infinite Adventure', 'Trò chơi MMORPG nhập vai với thế giới mở đầy sáng tạo và tương tác trực tuyến cao.', 'https://example.com/images/infinite-adventure.png', 'ACTIVE', '2025-04-02', 80, 3, 'Infinite Adventure đưa người chơi vào một thế giới giả tưởng sống động, nơi họ có thể khám phá, tạo liên minh và tham gia vào các trận chiến hoành tráng.', 'https://github.com/example/infinite-adventure', 'Bài viết chi tiết về cơ chế trò chơi, cốt truyện và cơ sở hạ tầng mạng hỗ trợ hàng nghìn người chơi trực tuyến cùng lúc.', 'Phạm Duy Khanh', 'Nguyễn Quang Vũ', NULL, NULL, 2, '2025-04-02', '2025-04-02'),
+
+    ('Retro Arcade Revival', 'Phiên bản hiện đại của những trò chơi arcade cổ điển với đồ họa nâng cấp và chế độ chơi đa người.', 'https://example.com/images/retro-arcade.png', 'ACTIVE', '2025-04-02', 65, 4, 'Retro Arcade Revival tái hiện lại vẻ đẹp của các trò chơi arcade xưa cũ, đồng thời bổ sung các tính năng mới và chế độ chơi đa người để tăng tính cạnh tranh.', 'https://github.com/example/retro-arcade-revival', 'Bài viết trình bày quá trình chuyển thể các trò chơi cổ điển sử dụng công cụ phát triển hiện đại.', 'Nguyễn Huy Hoàng', 'Lê Minh Hiển', NULL, NULL, 2, '2025-04-02', '2025-04-02'),
+
+    ('DeepVision AI', 'Nền tảng deep learning tiên tiến cho các tác vụ nhận dạng hình ảnh.', 'https://example.com/images/deepvision-ai.png', 'ACTIVE', '2025-04-02', 100, 5, 'DeepVision AI sử dụng các mô hình mạng nơ-ron tích chập (CNN) để nhận diện và phân loại đối tượng trong hình ảnh, ứng dụng rộng rãi trong lĩnh vực an ninh và y tế.', 'https://github.com/example/deepvision-ai', 'Bài viết tổng hợp nghiên cứu về các kiến trúc mạng nơ-ron và quá trình huấn luyện mô hình với dữ liệu lớn.', 'Nguyễn Thanh Bình', 'Đặng Minh Thuận', NULL, 15, 3, '2025-04-02', '2025-04-02');
+
+INSERT INTO project_tag (project_id, tag_id)
+VALUES
+    (1, 1), (1, 2), (1, 3), (1, 4),
+    (2, 5), (2, 6), (2, 7),
+    (3, 8), (3, 9), (3, 10),
+    (4, 11), (4, 12), (4, 9),
+    (5, 13), (5, 14), (5, 4);
+
+INSERT INTO project_technology (project_id, technology_id)
+VALUES
+    (1, 1), (1, 2), (1, 3), (1, 4), (1, 5),
+    (2, 6), (2, 7), (2, 8),
+    (3, 9), (3, 10), (3, 11),
+    (4, 9), (4, 12), (4, 13),
+    (5, 6), (5, 14), (5, 15), (5, 16);
+
